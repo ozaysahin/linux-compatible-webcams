@@ -1,57 +1,59 @@
-# 🎥 Linux UVC Uyumlu Generic Kameralar
+# Linux UVC Compatible Webcams
 
-> **UVC (USB Video Class)** — Linux kernel'ine dahil `uvcvideo` driver'ı sayesinde **sürücü kurmadan** çalışan kameraların listesidir.  
-> Kaynak: [Linux UVC Driver & Tools](http://www.ideasonboard.org/uvc/)
+A list of generic/OEM webcams that work on Linux out of the box through the
+kernel's built-in `uvcvideo` driver — no proprietary driver needed.
 
----
+Source data compiled from the [Linux UVC Driver & Tools](http://www.ideasonboard.org/uvc/)
+project pages.
 
-## ⚠️ Önemli Notlar
+## Notes
 
-| # | Uyarı |
-|---|-------|
-| [1] | 1. ve 2. nesil Logitech webcam'lerde firmware bug'ı var → kararsız davranışa yol açabilir. Yeni modelleri tercih et. |
-| [2] | Linux kernel 2.6.22+ sürümünde USB audio bug fix, eski Logitech modellerde yeni bir bug tetikleyebilir. |
-| [3] | Bazı notebook modellerde kamera **ters monte edilmiş** olabilir. `libv4l` kullanan uygulamalar bunu otomatik düzeltir. |
-| [4] | Apple iSight webcam'ler için MacOS X driver'ından firmware çıkarılması gerekir. |
-| [5] | USB 1.1 controller'a bağlandığında video bozulması yaşanabilir → USB 2.0'a bağla. |
-| [6] | Bazı Logitech modellerinde belirli part number'larda [1]'e benzer sorunlar var. |
-| [7] | Creative Live! Cam Video IM Pro'nun birden fazla versiyonu var; sadece biri UVC uyumlu. USB Product ID'yi kontrol et. |
-| [8] | 640x480 altındaki çözünürlükler yalnızca 30fps'de çalışabilir. |
-| [9] | Aynı Device ID birden fazla farklı kamera modeli tarafından kullanılıyor; satın almadan model adını doğrula. |
-| [10] | USB 1.1 hub'a bağlandığında çalışmayabilir. |
-| [11] | 1.3MP veya 2MP iddiasına rağmen UVC descriptor'ları maksimum 640x480 çözünürlük bildiriyor. |
-| [12] | Bazı versiyonlar UVC'yi facade olarak kullanıyor; vendor protokolü ile gerçek işlem yapıyor → düşük FPS ve bozuk frame'lere yol açabilir. |
-| [13] | Maksimum USB bandwidth talep ediyor; dahili mikrofon dahil başka USB cihazlarla aynı anda kullanımda sorun çıkabilir. |
-| [14] | Varsayılan dışı frame rate'lerde düşük ışıkta aşırı karanlık görüntü. `RESTRICT_FRAME_RATE` quirk ile çözülebilir. |
-| [15] | Bazı versiyonlarda UVC kontrol isteklerine random timeout/stall yaşanabiliyor. |
-| [16] | Manuel exposure 2500/2^n dışında bir değere ayarlandığında görüntü aşırı parlak olabilir. |
-| [17] | Tam çözünürlük tarama yalnızca still image capture ile mümkün; `uvcvideo` henüz desteklemiyor. |
-| [18] | Linux kernel v2.3.37–v3.5 arasında USB auto-suspend sorunu olabilir. |
+A few of the entries below have quirks. Numbers in the "Notes" column refer
+to this table.
 
----
+| # | Note |
+|---|------|
+| 1 | 1st/2nd gen Logitech webcams have a firmware bug that can cause unstable behavior. Prefer newer models when possible. |
+| 2 | The USB audio bug fix in kernel 2.6.22+ can trigger a separate bug on some older Logitech models. |
+| 3 | On some laptops the camera is physically mounted upside down. Apps using `libv4l` correct this automatically. |
+| 4 | Apple iSight cameras need firmware extracted from the Mac OS X driver to work. |
+| 5 | Connecting through a USB 1.1 controller can cause corrupted video — use USB 2.0 instead. |
+| 6 | Certain Logitech part numbers show issues similar to [1]. |
+| 7 | The Creative Live! Cam Video IM Pro has multiple hardware revisions; only one is UVC compliant. Check the USB Product ID before buying. |
+| 8 | Resolutions below 640x480 may only work at 30fps. |
+| 9 | This Device ID is shared across several unrelated camera models — verify the exact model name before purchase. |
+| 10 | May not work when connected through a USB 1.1 hub. |
+| 11 | Advertised as 1.3MP/2MP, but the UVC descriptors only report up to 640x480. |
+| 12 | Some revisions use UVC as a facade while doing the real transfer over a vendor-specific protocol, causing low FPS and corrupted frames. |
+| 13 | Requests near-maximum USB bandwidth; can conflict with other USB devices (including built-in mics) used at the same time. |
+| 14 | Non-default frame rates can produce very dark images in low light. Workaround: `RESTRICT_FRAME_RATE` quirk. |
+| 15 | Some revisions randomly time out or stall on UVC control requests. |
+| 16 | Setting manual exposure to anything other than 2500/2^n can overexpose the image. |
+| 17 | Full-resolution capture is only available through still-image mode, which `uvcvideo` doesn't support yet. |
+| 18 | USB auto-suspend issues on kernel versions between v2.3.37 and v3.5. |
 
-## 📋 Uyumlu Kamera Listesi
+## Compatible cameras
 
 ### ALi Corporation
-| USB ID | Model | Notlar |
-|--------|-------|--------|
+| USB ID | Model | Notes |
+|--------|-------|-------|
 | 0402:5606 | USB 2.0 Camera (VIT D2010 notebooks) | [12] |
 | 0402:9665 | 1.3M WebCam (Acer Aspire AS7551-7442 notebooks) | |
 
 ### Quanta Computer
-| USB ID | Model | Notlar |
-|--------|-------|--------|
-| 0408:030c | HP Webcam (HP Pavilion DV6744 ve DV6750) | |
+| USB ID | Model | Notes |
+|--------|-------|-------|
+| 0408:030c | HP Webcam (HP Pavilion DV6744 and DV6750) | |
 | 0408:2fb1 | Laptop Integrated Webcam 2HDM (Dell XPS notebooks) | |
 
-### Windbond
-| USB ID | Model | Notlar |
-|--------|-------|--------|
+### Winbond
+| USB ID | Model | Notes |
+|--------|-------|-------|
 | 0416:a91a | LogiLink Wireless Webcam | |
 
 ### Creative Labs
-| USB ID | Model | Notlar |
-|--------|-------|--------|
+| USB ID | Model | Notes |
+|--------|-------|-------|
 | 041e:4057 | Creative Live! Cam Optia | |
 | 041e:4058 | Creative Live! Cam Optia AF | [18] |
 | 041e:4063 | Creative Live! Cam Video IM Pro | [7] |
@@ -64,8 +66,8 @@
 | 041e:4088 | Creative Live! Cam Chat HD | |
 
 ### Genius
-| USB ID | Model | Notlar |
-|--------|-------|--------|
+| USB ID | Model | Notes |
+|--------|-------|-------|
 | 0458:505e | Genius iSlim 330 | |
 | 0458:7055 | Genius iSlim 2020AF | |
 | 0458:705d | Genius iSlim 2000AF | |
@@ -76,8 +78,8 @@
 | 0458:7081 | Genius FaceCam 2000 | |
 
 ### Microsoft
-| USB ID | Model | Notlar |
-|--------|-------|--------|
+| USB ID | Model | Notes |
+|--------|-------|-------|
 | 045e:00f8 | Microsoft LifeCam NX-6000 | |
 | 045e:0721 | Microsoft LifeCam NX-3000 | |
 | 045e:074a | Microsoft LifeCam VX-500 | |
@@ -88,8 +90,8 @@
 | 045e:0779 | Microsoft LifeCam HD-3000 | |
 
 ### Logitech
-| USB ID | Model | Notlar |
-|--------|-------|--------|
+| USB ID | Model | Notes |
+|--------|-------|-------|
 | 046d:0802 | Logitech Webcam C200 | |
 | 046d:0804 | Logitech Webcam C250 | |
 | 046d:0805 | Logitech Webcam C300 | |
@@ -130,8 +132,8 @@
 | 046d:09c1 | Logitech Quickcam Deluxe for Notebooks | [1][2] |
 
 ### Philips
-| USB ID | Model | Notlar |
-|--------|-------|--------|
+| USB ID | Model | Notes |
+|--------|-------|-------|
 | 0471:0331 | Philips SPC 1300NC | |
 | 0471:0332 | Philips SPC 1000NC | |
 | 0471:0333 | Philips SPC 620NC | |
@@ -142,15 +144,15 @@
 | 0471:20d0 | Philips SPZ2000 | |
 
 ### Sanyo Electric
-| USB ID | Model | Notlar |
-|--------|-------|--------|
+| USB ID | Model | Notes |
+|--------|-------|-------|
 | 0474:02da | Sanyo Xacti HD2000 | |
 | 0474:0722 | Sanyo W33SA | |
 | 0474:0b0e | Sanyo VPC-CA102 | |
 
 ### Chicony Electronics
-| USB ID | Model | Notlar |
-|--------|-------|--------|
+| USB ID | Model | Notes |
+|--------|-------|-------|
 | 04f2:a133 | Maxell MaxCam MWC-1300D | |
 | 04f2:a13c | HP KQ246AA 8.0MP Deluxe Webcam | |
 | 04f2:a13e | Panda 10C | |
@@ -181,8 +183,8 @@
 | 04f2:b230 | HP HD Webcam [Fixed] | [3] |
 
 ### OmniVision
-| USB ID | Model | Notlar |
-|--------|-------|--------|
+| USB ID | Model | Notes |
+|--------|-------|-------|
 | 05a9:2640 | OmniVision OV2640 (Dell Inspiron 1420/1720) | |
 | 05a9:2643 | OmniVision Monitor Webcam (Dell SP2208WFP) | |
 | 05a9:2649 | OmniVision Monitor Webcam (Dell SP2309W) | |
@@ -190,14 +192,14 @@
 | 05a9:7670 | OmniVision OV7670 (Dell XPS m1330) | |
 
 ### Apple
-| USB ID | Model | Notlar |
-|--------|-------|--------|
+| USB ID | Model | Notes |
+|--------|-------|-------|
 | 05ac:8502 | Apple built-in iSight | [4] |
 
-### Diğer Markalar
+### Other brands
 
-| USB ID | Model | Üretici | Notlar |
-|--------|-------|---------|--------|
+| USB ID | Model | Vendor | Notes |
+|--------|-------|--------|-------|
 | 05c8:0103 | FO13FF-65 PC-CAM | Foxlink | |
 | 05c8:0403 | HP Webcam [2 MP Fixed] (HP Mini 5103) | Foxlink | |
 | 05ca:181c | Laptop Integrated Webcam FHD (Dell Latitude E6520) | Ricoh | |
@@ -249,7 +251,7 @@
 | 0c45:6415 | Laptop Integrated Webcam 1.3M (Dell Inspiron 13z) | Sonix | |
 | 13d3:509b | USB 2.0 Camera (Asus EeePC T91) | Genesys Logic | |
 | 13d3:5103 | USB 2.0 Camera (Medion Akoya AIO) | Sonix | |
-| 13d3:5122 | USB 2.0 Camera (Asus NX90Jq ve U33JC) | Sonix | [3] |
+| 13d3:5122 | USB 2.0 Camera (Asus NX90Jq and U33JC) | Sonix | [3] |
 | 13d3:5130 | USB 2.0 Camera (Asus K40AE, K50IE, K52JT) | Sonix | [3] |
 | 13d3:5702 | USB 2.0 UVC VGA WebCam (Asus Eee PC 1001PXD) | Azurewave | |
 | 13d3:5710 | USB 2.0 UVC VGA WebCam (Asus U31SD) | Azurewave | |
@@ -278,8 +280,8 @@
 | 5986:0102 | Acer Crystal Eye webcam (TravelMate 7720) | Bison Electronics | |
 | 5986:0200 | Acer OrbiCam | Bison Electronics | |
 | 5986:0202 | Bison (Fujitsu-Siemens Amilo SI2636) | Bison Electronics | |
-| 5986:0203 | Bison (Advent 4211 ve MSI Wind) | Bison Electronics | |
-| 5986:0205 | Lenovo EasyCamera (N500 ve U330) | Bison Electronics | [9] |
+| 5986:0203 | Bison (Advent 4211 and MSI Wind) | Bison Electronics | |
+| 5986:0205 | Lenovo EasyCamera (N500 and U330) | Bison Electronics | [9] |
 | 5986:0241 | Bison (MSI Wind Top AE1900) | Bison Electronics | [15] |
 | 5986:0314 | BisonCam, NB Pro (MSI Wind U135DX) | Bison Electronics | |
 | 5986:0343 | BisonCam, NB Pro (Clevo P150HM) | Bison Electronics | |
@@ -288,35 +290,31 @@
 | eb1a:2771 | eMPIA 2771 based camera (Intelbras iPlug) | eMPIA Technology | |
 | eb1a:299f | Supereyes Borescope | eMPIA Technology | |
 
----
-
-## 🔧 Kameranın Algılanıp Algılanmadığını Test Etme
+## Checking if your camera is detected
 
 ```bash
-# Bağlı UVC cihazlarını listele
+# List connected USB devices
 lsusb
 
-# Video cihazlarını göster
+# Show video devices
 ls /dev/video*
 
-# Kamera bilgisini sorgula
+# Query camera info
 v4l2-ctl --list-devices
 
-# Görüntü testi (ffmpeg ile)
+# Quick preview with ffmpeg
 ffplay /dev/video0
 ```
 
----
+## Driver
 
-## 📌 Kullanılan Driver
-
-Bu kameralar Linux kernel'indeki **`uvcvideo`** driver'ı ile çalışır.  
-Kernel 2.6.26+ sürümlerinde varsayılan olarak dahilidir, ekstra kurulum gerekmez.
+These cameras are handled by the kernel's `uvcvideo` driver, built in since
+2.6.26 — nothing to install separately.
 
 ```bash
-# Driver'ın yüklü olup olmadığını kontrol et
+# Check if the driver is loaded
 lsmod | grep uvcvideo
 
-# Yüklü değilse
+# Load it manually if it isn't
 sudo modprobe uvcvideo
 ```
